@@ -1,7 +1,7 @@
 from subprocess import call
 import re
 import sys
-
+import subprocess
 
 replacement_patterns = [
 (r'won\'t', 'will not'),
@@ -68,7 +68,9 @@ def startVid(time):
 	
 	startTime=3600*int(Times[0][0])+60*int(Times[0][1])+int(Times[0][2])-2	# starts vid 2 sec earlier
 
-	call(["vlc", "--start-time",str(startTime),"/home/vivek/Downloads/matrix1999.mp4"])
+	#Vidprocess=call(["vlc", "--start-time",str(startTime),"/home/vivek/Downloads/matrix1999.mp4", "&"])
+	Vidprocess = subprocess.Popen(["vlc", "--start-time",str(startTime),"--sub-file",sys.argv[1:][0],"/home/vivek/Downloads/matrix1999.mp4", "&"],stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
+	return Vidprocess
 	
 #starts video at 720 secs
 
@@ -81,15 +83,21 @@ def main():
 	dict=preProcess(fileName)
 	keyToSearch=inputKeyword()
 
+	procId=0	#process id initialization
+
 	timesList=SearchOccurences(keyToSearch,dict)
-	print timesList
+	#print timesList
 	for i in timesList:
-		startVid(i)
+		if procId:
+			procId.kill()
+		procId=startVid(i)
 		nextK=raw_input()
-	 	# if nextK is "N":
-	 	# 	continue
-	 	# else:
-	 	# 	break
+	 	if nextK is "N":
+	 		continue
+	 	else:
+	 		if procId:
+				procId.kill()
+	 		break
 
 if __name__ == '__main__':
 	main()
