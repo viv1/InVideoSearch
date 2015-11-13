@@ -15,6 +15,11 @@ def SearchOccurences(key):
 		data=data.lower()	#convert all to lower(Case insensitive search)
 		# convert 're to are, etc.
 		#search for keyword
+		mc=re.findall(r'(\d+:\d+:\d+,\d+) --> (\d+:\d+:\d+,\d+)([\r\n.\w\s]+)',data)
+		#start time=mc[5][0] and end time=mc[5][1] and sub= mc[5][2]
+		for i in xrange(1300):
+			if "neo" in mc[i][2]:
+				print mc[i][2]
 		#for word in re.findall('\w+', data):
 		#	print word
 
