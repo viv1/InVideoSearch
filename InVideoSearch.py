@@ -17,6 +17,18 @@ replacement_patterns = [
 ]
 
 
+#REPLACEMENT
+class RegexpReplacer(object):
+	def __init__(self, patterns=replacement_patterns):
+		self.patterns = [(re.compile(regex), repl) for (regex, repl) in patterns]
+
+	def replace(self, text):
+		s = text
+		for (pattern, repl) in self.patterns:
+			s = re.sub(pattern, repl, s)
+		return s
+
+
 #utility func1 to input keyword from user
 def inputKeyword():
 	return raw_input("Enter key to search in the video: ")
@@ -26,15 +38,13 @@ def inputKeyword():
 def SearchOccurences(key):
 	time=[]
 	
-	#start time=mc[5][0] and end time=mc[5][1] and sub= mc[5][2]
+	#start time=dict[5][0] and end time=dict[5][1] and sub= dict[5][2]
 	for i in xrange(len(dict)):
 		if key in dict[i][2]:
-			print dict[i][2]
-	#for word in re.findall('\w+', data):
-	#	print word
+			time.append(dict[i][0])
 
+	return time 	#in hh:mm:ss,ms format
 
-	return time
 
 #utility func to preprocess subtitle file
 def preProcess(fileName):
@@ -46,7 +56,7 @@ def preProcess(fileName):
 		# convert 're to are, etc.
 		replacer=RegexpReplacer()
 		data=replacer.replace(data)
-		
+
 		#search for keyword
 		dict=re.findall(r'(\d+:\d+:\d+,\d+) --> (\d+:\d+:\d+,\d+)([\r\n.\,\w\s]+)',data)
 
@@ -57,16 +67,6 @@ def startVid(time):
 	
 #starts video at 720 secs
 
-#REPLACEMENT
-class RegexpReplacer(object):
-	def __init__(self, patterns=replacement_patterns):
-		self.patterns = [(re.compile(regex), repl) for (regex, repl) in patterns]
-
-	def replace(self, text):
-		s = text
-		for (pattern, repl) in self.patterns:
-			s = re.sub(pattern, repl, s)
-		return s
 
 def main():
 
