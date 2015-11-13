@@ -1,5 +1,6 @@
 from subprocess import call
 import re
+import sys
 
 
 replacement_patterns = [
@@ -76,7 +77,7 @@ def main():
 
 	dict=[]	#Dictionary to store start time, end time and subtitle texts
 
-	fileName="/home/vivek/Downloads/matrix.srt"
+	fileName=str(sys.argv[1:][0])	#passing subtitle name as argument
 	dict=preProcess(fileName)
 	keyToSearch=inputKeyword()
 
