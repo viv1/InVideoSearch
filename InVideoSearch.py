@@ -1,7 +1,6 @@
 from subprocess import call
 import re
 
-dict=[]	#Dictionary to store start time, end time and subtitle texts
 
 replacement_patterns = [
 (r'won\'t', 'will not'),
@@ -29,19 +28,20 @@ class RegexpReplacer(object):
 		return s
 
 
-#utility func1 to input keyword from user
+#utility func to input keyword from user
 def inputKeyword():
 	return raw_input("Enter key to search in the video: ")
 
 #utility func to search for keyword in subtitle file
 #returns the list of times where keyword is present
-def SearchOccurences(key):
+def SearchOccurences(key,dict):
 	time=[]
-	
+	print len(dict)
 	#start time=dict[5][0] and end time=dict[5][1] and sub= dict[5][2]
 	for i in xrange(len(dict)):
 		if key in dict[i][2]:
 			time.append(dict[i][0])
+			#print dict[i][0]
 
 	return time 	#in hh:mm:ss,ms format
 
@@ -59,32 +59,36 @@ def preProcess(fileName):
 
 		#search for keyword
 		dict=re.findall(r'(\d+:\d+:\d+,\d+) --> (\d+:\d+:\d+,\d+)([\r\n.\,\w\s]+)',data)
+		return dict
 
-#utility func3 to start video
+#utility func to start video
 def startVid(time):
-	Times=re.find(r'(\d+):(\d+):(\d+),(\d+)',time)
+	Times=re.findall(r'(\d+):(\d+):(\d+),(\d+)',time)
 	
 	startTime=3600*int(Times[0][0])+60*int(Times[0][1])+int(Times[0][2])-2	# starts vid 2 sec earlier
 
-	call(["vlc", "--start-time",startTime,"/home/vivek/Downloads/matrix1999.mp4"])
+	call(["vlc", "--start-time",str(startTime),"/home/vivek/Downloads/matrix1999.mp4"])
 	
 #starts video at 720 secs
 
 
 def main():
 
-	fileName="/home/vivek/Downloads/matrix1999.srt"
-	preProcess(fileName)
+	dict=[]	#Dictionary to store start time, end time and subtitle texts
+
+	fileName="/home/vivek/Downloads/matrix.srt"
+	dict=preProcess(fileName)
 	keyToSearch=inputKeyword()
 
-	timesList=SearchOccurences(keyToSearch)
+	timesList=SearchOccurences(keyToSearch,dict)
+	print timesList
 	for i in timesList:
 		startVid(i)
 		nextK=raw_input()
-		if nextK is "N":
-			continue
-		else:
-			break
+	 	# if nextK is "N":
+	 	# 	continue
+	 	# else:
+	 	# 	break
 
 if __name__ == '__main__':
 	main()
