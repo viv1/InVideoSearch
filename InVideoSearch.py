@@ -62,8 +62,11 @@ def preProcess(fileName):
 
 #utility func3 to start video
 def startVid(time):
+	Times=re.find(r'(\d+):(\d+):(\d+),(\d+)',time)
+	
+	startTime=3600*int(Times[0][0])+60*int(Times[0][1])+int(Times[0][2])-2	# starts vid 2 sec earlier
 
-	call(["vlc", "--start-time",time,"/home/vivek/Downloads/matrix1999.mp4"])
+	call(["vlc", "--start-time",startTime,"/home/vivek/Downloads/matrix1999.mp4"])
 	
 #starts video at 720 secs
 
