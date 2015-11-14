@@ -63,13 +63,13 @@ def preProcess(fileName):
 		return dict
 
 #utility func to start video
-def startVid(time):
+def startVid(time,SubfileName):
 	Times=re.findall(r'(\d+):(\d+):(\d+),(\d+)',time)
 	
-	startTime=3600*int(Times[0][0])+60*int(Times[0][1])+int(Times[0][2])-2	# starts vid 2 sec earlier
+	startTime=3600*int(Times[0][0])+60*int(Times[0][1])+int(Times[0][2])-1	# starts vid 2 sec earlier
 
 	#Vidprocess=call(["vlc", "--start-time",str(startTime),"/home/vivek/Downloads/matrix1999.mp4", "&"])
-	Vidprocess = subprocess.Popen(["vlc", "--start-time",str(startTime),"--sub-file",sys.argv[1:][0],"/home/vivek/Downloads/matrix1999.mp4", "&"],stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
+	Vidprocess = subprocess.Popen(["vlc", "--start-time",str(startTime),"--sub-file",SubfileName,sys.argv[1:][0], "&"],stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
 	return Vidprocess
 	
 #starts video at 720 secs
@@ -79,8 +79,12 @@ def main():
 
 	dict=[]	#Dictionary to store start time, end time and subtitle texts
 
-	fileName=str(sys.argv[1:][0])	#passing subtitle name as argument
-	dict=preProcess(fileName)
+	vidFormats=[".mp4",".vlc",".ogg"]	#Video formats
+	MoviefileName=str(sys.argv[1:][0])	#passing movie name as argument
+	for i in vidFormats:
+		SubfileName=MoviefileName.replace(i,".srt")
+		break
+	dict=preProcess(SubfileName)
 	keyToSearch=inputKeyword()
 
 	procId=0	#process id initialization
@@ -90,8 +94,8 @@ def main():
 	for i in timesList:
 		if procId:
 			procId.kill()
-		procId=startVid(i)
-		nextK=raw_input()
+		procId=startVid(i,SubfileName)
+		nextK=raw_input("Enter N to go to next scene with key: ")
 	 	if nextK is "N":
 	 		continue
 	 	else:
