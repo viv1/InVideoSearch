@@ -66,13 +66,12 @@ def preProcess(fileName):
 def startVid(time,SubfileName):
 	Times=re.findall(r'(\d+):(\d+):(\d+),(\d+)',time)
 	
-	startTime=3600*int(Times[0][0])+60*int(Times[0][1])+int(Times[0][2])-1	# starts vid 2 sec earlier
+	startTime=3600*int(Times[0][0])+60*int(Times[0][1])+int(Times[0][2])-1	# starts vid 1 sec earlier
 
 	#Vidprocess=call(["vlc", "--start-time",str(startTime),"/home/vivek/Downloads/matrix1999.mp4", "&"])
 	Vidprocess = subprocess.Popen(["vlc", "--start-time",str(startTime),"--sub-file",SubfileName,sys.argv[1:][0], "&"],stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
 	return Vidprocess
 	
-#starts video at 720 secs
 
 
 def main():
@@ -81,6 +80,17 @@ def main():
 
 	vidFormats=[".mp4",".vlc",".ogg"]	#Video formats
 	MoviefileName=str(sys.argv[1:][0])	#passing movie name as argument
+
+	#Find subfileName in the directory
+	"""
+	Currently subfile name should be same as movie name
+	Better ways to implement:
+		1.ask the user for subfile name
+		2.use subtitle finder API and download subfile
+		3.ofcourse, keep the existing implementation too
+
+	Priority 1>3>2
+	"""
 	for i in vidFormats:
 		SubfileName=MoviefileName.replace(i,".srt")
 		break
