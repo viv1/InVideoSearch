@@ -78,7 +78,9 @@ def main():
 
 	dict=[]	#Dictionary to store start time, end time and subtitle texts
 
-	vidFormats=[".mp4",".vlc",".ogg"]	#Video formats
+	#Video formats
+	vidFormats=[".avi", ".mp4", ".mkv", ".mpg", ".mpeg", ".mov", ".rm", ".vob", ".wmv", ".flv", ".3gp"]
+	
 	MoviefileName=str(sys.argv[1:][0])	#passing movie name as argument
 
 	#Find subfileName in the directory
