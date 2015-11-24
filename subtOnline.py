@@ -1,22 +1,40 @@
+"""
+We are using subDB for downloading subtitles
+GET and POST protocols of HTTP are cool and python requests rocks!!
+"""
 import os
 import hashlib
-"""
-We will be using subDB for downloading subtitles
-Need to learn implementing GET and POST protocols of HTTP
-"""
+import requests
 
-#this hash function receives the name of the file and returns the hash code
-def get_hash(name):
-    readsize = 64 * 1024
-    with open(name, 'rb') as f:
-        size = os.path.getsize(name)
-        data = f.read(readsize)
-        f.seek(-readsize, os.SEEK_END)
-        data += f.read(readsize)
-    return hashlib.md5(data).hexdigest()
+def getHash(name):
+	with open(name,'rb') as f:
+		readsize=64*1024
+		size=os.path.getsize(name)
+		data=f.read(readsize)
+		f.seek(-readsize,os.SEEK_END)
+		data +=f.read(readsize)
+	return hashlib.md5(data).hexdigest()
+
+
+def getSub(movieHash):
+	headers={
+		'User-Agent':'SubDB/1.0 ()',
+	}
+	re=requests.get('http://api.thesubdb.com/?action=download&hash='+movieHash+'&language=en',headers=headers)
+	return re.text
+
+
+def createSubFile(subText):
+	with open('matrix.srt','w') as f:
+		f.write(subText.encode('utf-8'))
+
 
 def main():
-	get_hash('matrix.mp4')
+	name='matrix.mp4'
+	movieHash=getHash(name)
+	subText=getSub(movieHash)
+	createSubFile(subText)
+	#print movieHash
+
 
 main()
-
