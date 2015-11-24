@@ -27,6 +27,10 @@ def getSub(movieHash):
 def createSubFile(subText):
 	with open('matrix.srt','w') as f:
 		f.write(subText.encode('utf-8'))
+		"""
+		If you want to remove non ascii characters, use:
+		"""
+		#f.write(subText.encode('ascii', 'ignore').decode('ascii'))
 
 
 def main():
