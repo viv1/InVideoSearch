@@ -6,6 +6,7 @@ import os
 import hashlib
 import requests
 
+#Func to generate Hash required for SubDB
 def getHash(name):
 	with open(name,'rb') as f:
 		readsize=64*1024
@@ -16,6 +17,7 @@ def getHash(name):
 	return hashlib.md5(data).hexdigest()
 
 
+#GET request for subtitle
 def getSub(movieHash):
 	headers={
 		'User-Agent':'SubDB/1.0 ()',
@@ -24,6 +26,7 @@ def getSub(movieHash):
 	return re.text
 
 
+#Create subtitle file
 def createSubFile(subText):
 	with open('matrix.srt','w') as f:
 		f.write(subText.encode('utf-8'))
@@ -33,12 +36,13 @@ def createSubFile(subText):
 		#f.write(subText.encode('ascii', 'ignore').decode('ascii'))
 
 
-def main():
-	name='matrix.mp4'
-	movieHash=getHash(name)
-	subText=getSub(movieHash)
-	createSubFile(subText)
-	#print movieHash
+"""Uncomment below lines to check the behaviour of this file"""
+# def main():
+# 	name='matrix.mp4'
+# 	movieHash=getHash(name)
+# 	subText=getSub(movieHash)
+# 	createSubFile(subText)
+# 	#print movieHash
 
 
-main()
+# main()
