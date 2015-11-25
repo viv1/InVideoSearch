@@ -85,12 +85,15 @@ def main():
 	
 	MoviefileName=str(sys.argv[1:][0])	#passing movie name as argument
 
+	for i in vidFormats:
+		SubfileName=MoviefileName.replace(i,".srt")
+		break
 	"""
 	Calling functions from subtOnline module
 	"""
 	movieHash=getHash(MoviefileName)	#get Movie Hash
 	subText=getSub(movieHash)			#get Subtitle from Hash
-	createSubFile(subText)				#create subtitle file
+	createSubFile(subText,SubfileName)	#create subtitle file
 
 	#Find subfileName in the directory
 	"""
@@ -102,9 +105,6 @@ def main():
 
 	Priority 1>3>2
 	"""
-	for i in vidFormats:
-		SubfileName=MoviefileName.replace(i,".srt")
-		break
 	dict=preProcess(SubfileName)
 	keyToSearch=inputKeyword()
 

@@ -27,8 +27,8 @@ def getSub(movieHash):
 
 
 #Create subtitle file
-def createSubFile(subText):
-	with open('matrix.srt','w') as f:
+def createSubFile(subText,subName):
+	with open(subName,'w') as f:
 		f.write(subText.encode('utf-8'))
 		"""
 		If you want to remove non ascii characters, use:
