@@ -2,6 +2,7 @@ from subprocess import call
 import re
 import sys
 import subprocess
+from subtOnline import *
 
 replacement_patterns = [
 (r'won\'t', 'will not'),
@@ -79,9 +80,17 @@ def main():
 	dict=[]	#Dictionary to store start time, end time and subtitle texts
 
 	#Video formats
+
 	vidFormats=[".avi", ".mp4", ".mkv", ".mpg", ".mpeg", ".mov", ".rm", ".vob", ".wmv", ".flv", ".3gp"]
 	
 	MoviefileName=str(sys.argv[1:][0])	#passing movie name as argument
+
+	"""
+	Calling functions from subtOnline module
+	"""
+	movieHash=getHash(MoviefileName)	#get Movie Hash
+	subText=getSub(movieHash)			#get Subtitle from Hash
+	createSubFile(subText)				#create subtitle file
 
 	#Find subfileName in the directory
 	"""
