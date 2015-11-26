@@ -1,46 +1,22 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
+import Tkinter as tk
 
-from Tkinter import Tk, W, E
-from ttk import Frame, Button, Label, Style
-from ttk import Entry
+class FindGUI(tk.Tk):
+    def __init__(self):
+        tk.Tk.__init__(self)
+        self.title("Find inside video")
 
-
-class Example(Frame):
-  
-    def __init__(self, parent):
-        Frame.__init__(self, parent)   
-         
-        self.parent = parent
-        
-        self.initUI()
-        
-    def initUI(self):
-      
-        self.parent.title("Find inside video")
-        
-        # Style().configure("TButton", padding=(0, 5, 0, 5), 
-        #     font='serif 10')
-              
-        entry = Entry(self)
-        entry.grid(row=0, columnspan=4)
-        
-        bck = Button(self, text="Next")
-        bck.grid(row=1, column=2)
-        Srch = Button(self, text="Search")
-        Srch.grid(row=1, column=1)
-        lbl = Button(self, text="Previous")
-        lbl.grid(row=1, column=3)    
-        
-        
-        self.pack()
-
-def main():
-  
-    root = Tk()
-    app = Example(root)
-    root.mainloop()  
+        self.entry = tk.Entry(self)
+        self.button1 = tk.Button(self, text="Search", command=self.on_button)
+        self.button2 = tk.Button(self, text="Next", command=self.on_button)
+        self.button3 = tk.Button(self, text="Previous", command=self.on_button)
 
 
-if __name__ == '__main__':
-    main() 
+        self.entry.pack()
+        self.button1.pack()
+        self.button2.pack()
+        self.button3.pack()
+
+
+    def on_button(self):
+        return (self.entry.get())
+
