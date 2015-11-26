@@ -19,27 +19,18 @@ class Example(Frame):
       
         self.parent.title("Find inside video")
         
-        Style().configure("TButton", padding=(0, 5, 0, 5), 
-            font='serif 10')
-        
-        self.columnconfigure(0, pad=3)
-        self.columnconfigure(1, pad=3)
-        self.columnconfigure(2, pad=3)
-        self.columnconfigure(3, pad=3)
-        
-        self.rowconfigure(0, pad=3)
-        self.rowconfigure(1, pad=3)
-        self.rowconfigure(2, pad=3)
-        self.rowconfigure(3, pad=3)
-        self.rowconfigure(4, pad=3)
-        
+        # Style().configure("TButton", padding=(0, 5, 0, 5), 
+        #     font='serif 10')
+              
         entry = Entry(self)
-        entry.grid(row=0, columnspan=4, sticky=W+E)
+        entry.grid(row=0, columnspan=4)
         
         bck = Button(self, text="Next")
-        bck.grid(row=1, column=1)
+        bck.grid(row=1, column=2)
+        Srch = Button(self, text="Search")
+        Srch.grid(row=1, column=1)
         lbl = Button(self, text="Previous")
-        lbl.grid(row=1, column=2)    
+        lbl.grid(row=1, column=3)    
         
         
         self.pack()
