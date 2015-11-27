@@ -1,3 +1,4 @@
+import os.path
 from subprocess import call
 import re
 import sys
@@ -81,20 +82,27 @@ def main():
 
 	#Video formats
 
-	vidFormats=[".avi", ".mp4", ".mkv", ".mpg", ".mpeg", ".mov", ".rm", ".vob", ".wmv", ".flv", ".3gp"]
+	vidFormats=[".avi", ".mp4"]
 	
 	MoviefileName=str(sys.argv[1:][0])	#passing movie name as argument
 
 	for i in vidFormats:
 		SubfileName=MoviefileName.replace(i,".srt")
-		break
-	"""
-	Calling functions from subtOnline module
-	"""
-	movieHash=getHash(MoviefileName)	#get Movie Hash
-	subText=getSub(movieHash)			#get Subtitle from Hash
-	createSubFile(subText,SubfileName)	#create subtitle file
+		
+	if not os.path.isfile(SubfileName):
+		
+		resp=raw_input("need to get online. Should we?(Y/N)")
+		if(resp is "Y"):
 
+			"""
+			Calling functions from subtOnline module
+			"""
+			movieHash=getHash(MoviefileName)	#get Movie Hash
+			subText=getSub(movieHash)			#get Subtitle from Hash
+			createSubFile(subText,SubfileName)	#create subtitle file
+	else:
+		pass
+		#print "file already in local"	
 	#Find subfileName in the directory
 	"""
 	Currently subfile name should be same as movie name
