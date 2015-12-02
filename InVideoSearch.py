@@ -84,7 +84,12 @@ def main():
 
 	vidFormats=[".avi", ".mp4"]
 	
-	MoviefileName=str(sys.argv[1:][0])	#passing movie name as argument
+	if len(sys.argv)>1:
+		MoviefileName=str(sys.argv[1:][0])	#passing movie name as argument
+	else:
+		MoviefileName=""
+		while not MoviefileName:
+			MoviefileName=raw_input("Please enter movie name: ")
 
 	for i in vidFormats:
 		SubfileName=MoviefileName.replace(i,".srt")
