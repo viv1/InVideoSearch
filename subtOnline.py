@@ -36,6 +36,8 @@ def createSubFile(subText,subName):
 		#f.write(subText.encode('ascii', 'ignore').decode('ascii'))
 
 
+"""Use python -i subtOnline.py to check the behaviour of this file"""
+#or
 """Uncomment below lines to check the behaviour of this file"""
 # def main():
 # 	name='matrix.mp4'

@@ -94,8 +94,7 @@ def main():
 	for i in vidFormats:
 		SubfileName=MoviefileName.replace(i,".srt")
 		
-	if not os.path.isfile(SubfileName):
-		
+	if not os.path.isfile(SubfileName):		
 		resp=raw_input("need to get online. Should we?(Y/N)")
 		if(resp is "Y"):
 
@@ -105,6 +104,10 @@ def main():
 			movieHash=getHash(MoviefileName)	#get Movie Hash
 			subText=getSub(movieHash)			#get Subtitle from Hash
 			createSubFile(subText,SubfileName)	#create subtitle file
+
+		else:
+			sys.exit("Exiting program since no source of Subtitle")
+
 	else:
 		pass
 		#print "file already in local"	
