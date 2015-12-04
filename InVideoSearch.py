@@ -5,6 +5,15 @@ import sys
 import subprocess
 from subtOnline import *
 
+# To do:
+"""	Need to make python 3 compatible
+1. print statements
+2. input statements
+3. requests calls
+
+Make these changes in other files too.	
+"""
+
 replacement_patterns = [
 (r'won\'t', 'will not'),
 (r'can\'t', 'cannot'),
